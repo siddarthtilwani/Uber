@@ -4,12 +4,17 @@ const express=require('express')
 const cors=require("cors")
 const app=express()
 const connnectToDb=require('./db/db')
-
+const userRoutes=require('./routes/user.routes')
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 connnectToDb()
 app.use(cors())
 app.get('/',(req,res)=>{
     res.send('Hello World')
 })
+
+app.use('/users',userRoutes)
+
 
 
 
