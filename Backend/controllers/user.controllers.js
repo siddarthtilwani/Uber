@@ -8,7 +8,10 @@ if(!err.isEmpty()){
     return res.status(400).json({err:err.array()});
 }
     const {fullname,email,password}=req.body
-
+const isusersalready=await userModel.findOne({email})
+if(isusersalready){
+    return res.status(400).json({err:'user already exists'})
+}
     const hashPassword=await userModel.hashPassword(password)
     const user=await createUser({firstname:fullname.firstname,lastname:fullname.lastname,email,password:hashPassword})
 
