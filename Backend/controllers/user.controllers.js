@@ -34,5 +34,10 @@ exports.login=async(req,res,next)=>{
         return res.status(404).json({err:'invalid user or password'})
     }
     const token=await user.generateToken()
+    res.cookie('token',token)
     res.status(200).json({user,token})
+}
+
+exports.getUserProfile=async(req,res,next)=>{
+    return res.status(200).json(req.user)
 }
