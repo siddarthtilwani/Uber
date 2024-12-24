@@ -1,24 +1,34 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
+import { UserDataContext } from '../context/UserContext';
 const UserSignup = () => {
     
         const [email,setemail]=useState('')
         const [password,setpassword]=useState('')
-        const [Firstname,setFirstname]=useState('')
-        const [Lastname,setLastname]=useState('')
+        const [firstname,setFirstname]=useState('')
+        const [lastname,setLastname]=useState('')
 
         const [userData,setUserData]=useState({})
-    
-        const submhitHandler=(e)=>{
+        const {user,setUser}=useContext(UserDataContext)
+    const navigate=useNavigate()
+        const submhitHandler=async(e)=>{
             e.preventDefault()
-            setUserData({
-                fullName:{
-                    Firstname:Firstname,
-                    Lastname:Lastname,
+            const newUser={
+                fullname:{
+                    firstname:firstname,
+                    lastname:lastname,
                 },
-                email:email,password:password})
-            console.log(userData)
+                email:email,password:password}
+                const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`,newUser)
+                if(response.status===201){
+                    setUser(response.data)
+                    
+            localStorage.setItem('token',response.data.token)
+                    navigate('/home')
+                }
+            console.log(response.data)
             setemail('')
             setFirstname('')
             setLastname('')
@@ -37,7 +47,7 @@ const UserSignup = () => {
                 
                 className='border px-4 py-2 w-1/2 bg-[#eeeeee]   rounded text-lg placeholder:text-base' 
                  placeholder='Firstname'
-                 value={Firstname}
+                 value={firstname}
                     onChange={(e)=>setFirstname(e.target.value)}
                  required />
                   <input 
@@ -45,7 +55,7 @@ const UserSignup = () => {
                 
                 className='border px-4 py-2 w-1/2 bg-[#eeeeee]   rounded text-lg placeholder:text-base' 
                  placeholder='Lastname'
-                    value={Lastname}
+                    value={lastname}
                     onChange={(e)=>setLastname(e.target.value)}
                  required />
     </div>
@@ -72,7 +82,7 @@ const UserSignup = () => {
                 onChange={(e)=>setpassword(e.target.value)}
                 required />
                 <button className=' px-4 py-2 bg-[#111] text-white font-semibold mb-3 w-full rounded text-lg placeholder:text-base' > 
-                    Login
+                    Create Account
                 </button>
              
                 
