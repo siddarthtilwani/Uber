@@ -48,8 +48,10 @@ exports.getUserProfile=async(req,res,next)=>{
 
 
 exports.logout=async(req,res,next)=>{
-    res.clearCookie('token')
     const token=req.headers.authorization?.split(' ')[1] || req.cookies.token
     await blocklistTokenModel.create({token})
+    res.clearCookie('token')
+    
+   
     res.status(200).json({message:'logged out successfully'})
 }
