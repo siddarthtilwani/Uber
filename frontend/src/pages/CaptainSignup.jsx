@@ -1,28 +1,53 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { CaptainDataContext } from '../context/CaptainContext';
+import axios from 'axios';
 const CaptainSignup = () => {
     const [email,setemail]=useState('')
     const [password,setpassword]=useState('')
     const [Firstname,setFirstname]=useState('')
     const [Lastname,setLastname]=useState('')
+    const [veichleColor,setVeichleColor]=useState('')
+    const [veichleNumber,setVeichleNumber]=useState('')
+    const [veichleCapacity,setVeichleCapacity]=useState('')
+    const [veichleType,setVeichleType]=useState('')
 
     const [userData,setUserData]=useState({})
 
-    const submhitHandler=(e)=>{
+    const {captain,setcaptain}=useContext(CaptainDataContext)
+    const navigate=useNavigate()
+    const submhitHandler=async(e)=>{
         e.preventDefault()
-        setUserData({
-            fullName:{
-                Firstname:Firstname,
-                Lastname:Lastname,
+        const captainData={
+            fullname:{
+                firstname:Firstname,
+                lastname:Lastname,
             },
-            email:email,password:password})
-        console.log(userData)
+            email:email,password:password,
+        veichle:{
+            color:veichleColor,
+            number:veichleNumber,
+            capacity:veichleCapacity,
+            veichleType:veichleType
+
+        }}
+        const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`,captainData)
+        if(response.status===201){
+            setcaptain(response.data.captain)
+            localStorage.setItem('token',response.data.token)
+            navigate('/captain-home')
+        }
+        console.log(response.data)
         setemail('')
         setFirstname('')
         setLastname('')
 
         setpassword('')
+        setVeichleColor('')
+        setVeichleNumber('')
+        setVeichleCapacity('')
+        setVeichleType('')
     }
     return (
         <div className='py-5 px-5  h-screen flex flex-col justify-between'>
@@ -70,8 +95,56 @@ const CaptainSignup = () => {
             value={password}
             onChange={(e)=>setpassword(e.target.value)}
             required />
+             <h3 className='text-lg font-medium mb-2'>Vehicle Information</h3>
+          <div className='flex gap-4 mb-7'>
+            <input
+              required
+              className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+              type="text"
+              placeholder='Vehicle Color'
+              value={veichleColor}
+              onChange={(e) => {
+                setVeichleColor(e.target.value)
+              }}
+            />
+            <input
+              required
+              className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+              type="text"
+              placeholder='Vehicle Plate'
+              value={veichleNumber}
+              onChange={(e) => {
+                setVeichleNumber(e.target.value)
+              }}
+            />
+          </div>
+          <div className='flex gap-4 mb-7'>
+            <input
+              required
+              className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+              type="number"
+              placeholder='Vehicle Capacity'
+              value={veichleCapacity}
+              onChange={(e) => {
+                setVeichleCapacity(e.target.value)
+              }}
+            />
+            <select
+              required
+              className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
+              value={veichleType}
+              onChange={(e) => {
+                setVeichleType(e.target.value)
+              }}
+            >
+              <option value="" disabled>Select Vehicle Type</option>
+              <option value="car">car</option>
+              <option value="auto">auto</option>
+              <option value="motorcycle">motorcycle</option>
+            </select>
+          </div>
             <button className=' px-4 py-2 bg-[#111] text-white font-semibold mb-3 w-full rounded text-lg placeholder:text-base' > 
-                Login
+                Create Captain Account
             </button>
          
             
