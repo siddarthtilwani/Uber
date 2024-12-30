@@ -7,13 +7,13 @@ exports.createCaptain=async(req,res,next)=>{
     if(!errors.isEmpty()){
         return res.status(400).json({errors:errors.array()})
     }
-    const {fullname,email,password,veichle}=req.body
+    const {fullname,email,password,vehicle}=req.body
     const iscaptainalreadt=await captainModel.findOne({email})
     if(iscaptainalreadt){
         return res.status(400).json({message:'captain already exists'})
     }
     const hashedpassword=await captainModel.hashPassword(password)
-    const captain=await captainService.createCaptain({firstname:fullname.firstname,lastname:fullname.lastname,email,password:hashedpassword,color:veichle.color,number:veichle.number,capacity:veichle.capacity,veichleType:veichle.veichleType})
+    const captain=await captainService.createCaptain({firstname:fullname.firstname,lastname:fullname.lastname,email,password:hashedpassword,color:vehicle.color,number:vehicle.number,capacity:vehicle.capacity,vehicleType:vehicle.vehicleType})
     const token=captain.generateToken()
     res.status(201).json({captain,token})
 }

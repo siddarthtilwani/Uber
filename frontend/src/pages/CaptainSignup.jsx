@@ -8,10 +8,10 @@ const CaptainSignup = () => {
     const [password,setpassword]=useState('')
     const [Firstname,setFirstname]=useState('')
     const [Lastname,setLastname]=useState('')
-    const [veichleColor,setVeichleColor]=useState('')
-    const [veichleNumber,setVeichleNumber]=useState('')
-    const [veichleCapacity,setVeichleCapacity]=useState('')
-    const [veichleType,setVeichleType]=useState('')
+    const [vehicleColor,setvehicleColor]=useState('')
+    const [vehicleNumber,setvehicleNumber]=useState('')
+    const [vehicleCapacity,setvehicleCapacity]=useState('')
+    const [vehicleType,setvehicleType]=useState('')
 
     const [userData,setUserData]=useState({})
 
@@ -25,11 +25,11 @@ const CaptainSignup = () => {
                 lastname:Lastname,
             },
             email:email,password:password,
-        veichle:{
-            color:veichleColor,
-            number:veichleNumber,
-            capacity:veichleCapacity,
-            veichleType:veichleType
+        vehicle:{
+            color:vehicleColor,
+            number:vehicleNumber,
+            capacity:vehicleCapacity,
+            vehicleType:vehicleType
 
         }}
         const response=await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`,captainData)
@@ -44,10 +44,10 @@ const CaptainSignup = () => {
         setLastname('')
 
         setpassword('')
-        setVeichleColor('')
-        setVeichleNumber('')
-        setVeichleCapacity('')
-        setVeichleType('')
+        setvehicleColor('')
+        setvehicleNumber('')
+        setvehicleCapacity('')
+        setvehicleType('')
     }
     return (
         <div className='py-5 px-5  h-screen flex flex-col justify-between'>
@@ -102,9 +102,9 @@ const CaptainSignup = () => {
               className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
               type="text"
               placeholder='Vehicle Color'
-              value={veichleColor}
+              value={vehicleColor}
               onChange={(e) => {
-                setVeichleColor(e.target.value)
+                setvehicleColor(e.target.value)
               }}
             />
             <input
@@ -112,9 +112,9 @@ const CaptainSignup = () => {
               className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
               type="text"
               placeholder='Vehicle Plate'
-              value={veichleNumber}
+              value={vehicleNumber}
               onChange={(e) => {
-                setVeichleNumber(e.target.value)
+                setvehicleNumber(e.target.value)
               }}
             />
           </div>
@@ -124,17 +124,17 @@ const CaptainSignup = () => {
               className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
               type="number"
               placeholder='Vehicle Capacity'
-              value={veichleCapacity}
+              value={vehicleCapacity}
               onChange={(e) => {
-                setVeichleCapacity(e.target.value)
+                setvehicleCapacity(e.target.value)
               }}
             />
             <select
               required
               className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border text-lg placeholder:text-base'
-              value={veichleType}
+              value={vehicleType}
               onChange={(e) => {
-                setVeichleType(e.target.value)
+                setvehicleType(e.target.value)
               }}
             >
               <option value="" disabled>Select Vehicle Type</option>

@@ -7,6 +7,7 @@ const connnectToDb=require('./db/db')
 const userRoutes=require('./routes/user.routes')
 const captainRoutes=require('./routes/captain.routes')
 const mapRoutes=require('./routes/maps.routes')
+const rideRoutes=require('./routes/rides.routes')
 const cookieParser=require('cookie-parser')
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -22,5 +23,7 @@ app.use('/users',userRoutes)
 app.use('/captains',captainRoutes)
 
 app.use('/maps',mapRoutes)
+
+app.use('/rides',rideRoutes)
 
 module.exports=app
