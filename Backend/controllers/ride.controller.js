@@ -22,9 +22,9 @@ exports.getFare=async(req,res,next)=>{
     if(!errors.isEmpty()){
         return res.status(400).json({message:errors.array()})
         }
-        const {pickup,destination}=req.body
+        const {pickup,destination}=req.query
         try{
-            const fare=await getFare({pickup,destination})
+            const fare=await getFare(pickup,destination)
             return res.status(200).json(fare)
         }
         catch(error){
