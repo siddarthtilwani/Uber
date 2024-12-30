@@ -67,7 +67,7 @@ exports.getAutoCompleteSuggestionsService=async(input)=>{
         throw new Error('query is required')
         }
 try{
-    const response =await axios.get(`https://api.locationiq.com/v1/autocomplete`,{
+    const response =await axios.get(`https://us1.locationiq.com/v1/autocomplete.php`,{
         params:{
             key:process.env.LOCATIONIQ_ACCESS_TOKEN,
             

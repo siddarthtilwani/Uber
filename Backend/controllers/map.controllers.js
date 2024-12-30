@@ -42,6 +42,7 @@ exports.getAutoCompleteSuggestions=async(req,res,next)=>{
         return res.status(500).json({errors:errors.array()})
         }
         const {input}=req.query
+        console.log('Received input:', input);
         try{
             const response=await getAutoCompleteSuggestionsService(input)
             res.status(200).json(response)
