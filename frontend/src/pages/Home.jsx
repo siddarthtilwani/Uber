@@ -16,6 +16,7 @@ const Home = () => {
     const [ConfirmedRidePannel,setConfirmedRidePannel]=useState(false)
     const [VehicleFoundPannel,setVehicleFoundPannel]=useState(false)
     const [WaitForDrivePannel,setWaitForDrivePannel]=useState(false)
+    const [fare,setfare]=useState({})
     const pannelRef=useRef(null)
     const pannelcloseref=useRef(null)
     const vehiclePannelRef=useRef(null)
@@ -25,6 +26,7 @@ const Home = () => {
     const [pickupsuggestions,setpickupsuggestions]=useState([])
     const [destinationsuggestions,setdestinationsuggestions]=useState([])
     const [activeField,setactiveField]=useState(null)
+    const [vehicleType,setvehicleType]=useState(null)
     const submitHandler=(e)=>{
         e.preventDefault();
     }
@@ -163,8 +165,46 @@ else{
                 })
         }
     },[WaitForDrivePannel])
-    function findATrip(){     setvehiclePannelOpen(true)
+   async function findATrip (){    
+        
+        const response=await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`,{
+            params:{
+                pickup:pickup,
+                destination:destination
+            }
+            ,
+            headers:{
+                Authorization:`Bearer ${localStorage.getItem('token')}`
+            }
+        })
+    setfare(response.data)
+        
+        
+        setvehiclePannelOpen(true)
                         setpannelOpen(false)
+    }
+
+    async function createRide() {
+        console.log(localStorage.getItem('token'))
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_URL}/rides/create`, 
+                { 
+                    pickup: pickup, 
+                    destination: destination, 
+                    vehicleType: vehicleType 
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            );
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+        
     }
     return (
         <div  className="h-screen  relative overflow-hidden">
@@ -205,13 +245,13 @@ else{
                </div>
             </div>
             <div ref={vehiclePannelRef} className="fixed z-10 w-full translate-y-full  bottom-0 px-3 py-10 bg-white pt-12">
-                <VehiclePannel setConfirmedRidePannel={setConfirmedRidePannel} setvehiclePannelOpen={setvehiclePannelOpen}/>
+                <VehiclePannel selectVehicle={setvehicleType} setConfirmedRidePannel={setConfirmedRidePannel} setvehiclePannelOpen={setvehiclePannelOpen} fare={fare}/>
            </div>
-           <div ref={ConfirmedRidePannelRef} className="fixed z-10 w-full translate-y-full  bottom-0 px-3 py-6 bg-white pt-12">
-               <ConfirmedRide setVehicleFoundPannel={setVehicleFoundPannel} setConfirmedRidePannel={setConfirmedRidePannel}/>
+           <div ref={ConfirmedRidePannelRef} className="fixed z-10 w-full translate-y-full  bottom-0 px-3 py-2 bg-white pt-12">
+               <ConfirmedRide createRide={createRide} pickup={pickup} destination={destination} fare={fare} vehicleType={vehicleType} setVehicleFoundPannel={setVehicleFoundPannel} setConfirmedRidePannel={setConfirmedRidePannel}/>
            </div>
-           <div ref={VehicleFoundPannelRef} className="fixed z-10 w-full translate-y-full  bottom-0 px-3 py-6 bg-white pt-12">
-               <LookingForDriver setVehicleFoundPannel={setVehicleFoundPannel}/>
+           <div ref={VehicleFoundPannelRef}  className="fixed z-10 w-full translate-y-full  bottom-0 px-3 py-6 bg-white pt-12">
+               <LookingForDriver createRide={createRide} pickup={pickup} destination={destination} fare={fare} vehicleType={vehicleType} setVehicleFoundPannel={setVehicleFoundPannel}/>
            </div>
            <div ref={WaitForDriveRef} className="fixed z-10 w-full  bottom-0 px-3 py-6 bg-white pt-12">
                <WaitForDrive setWaitForDrivePannel={setWaitForDrivePannel}/>

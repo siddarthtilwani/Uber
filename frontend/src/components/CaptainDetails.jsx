@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { CaptainDataContext } from "../context/CaptainContext";
+import { useSelector } from "react-redux";
 
 const CaptainDetails=()=>{
+    const captain=useSelector(state=>state.captain.captain)
+    useEffect(() => {
+        console.log("Captain Details - Current captain data:", captain);
+    }, [captain]);
+    if (!captain) {
+        return <div>Loading...</div>
+    }
+    
     return(
+        
         <div>
+            
              <div className="flex items-center justify-between">
                     <div className="flex items-center justify-start gap-3">
                         <img className="h-10 w-10 rounded-full object-cover" src="https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmFuZG9tJTIwcGVvcGxlfGVufDB8fDB8fHww" alt="" />
-                        <h4 className="text-lg font-medium"> Siddhu Tilwani</h4>
+                        <h4 className="text-lg font-medium capitalize">{captain.fullname.firstname+" "+captain.fullname.lastname}</h4>
                     </div>
                     <div>
                         <h4 className="text-xl font-semibold">

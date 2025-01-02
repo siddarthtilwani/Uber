@@ -1,17 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import  gsap from "gsap";
 import CaptainDetails from "../components/CaptainDetails";
 import RidePopup from "../components/RidePopup";
 import { useGSAP } from "@gsap/react";
 import ConfirmRidePopup from "../components/ConfirmRidePopup";
+import { CaptainDataContext } from "../context/CaptainContext";
+import { useSelector } from "react-redux";
 
 const CaptainHome = () => {
     const [RidePopupPannel,setRidePopupPannel]=useState(true)
     const RidePopupPannelRef=useRef(null)
     const [ConfirmRidePopupPannel,setConfirmRidePopupPannel]=useState(false)
     const ConfirmRidePopupPannelRef=useRef(null)
-
+// const { captain }=useContext(CaptainDataContext)
+const captain=useSelector(state=>state)
+useEffect(()=>{
+    
+    console.log(captain)
+},[captain])
     useGSAP(()=>{
         if(RidePopupPannel){
             gsap.to(RidePopupPannelRef.current,{

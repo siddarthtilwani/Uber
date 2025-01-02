@@ -1,30 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { CaptainDataContext } from '../context/CaptainContext';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setcaptain } from '../reducers/CaptainReducer';
 const CaptainLogin = () => {
     const [email,setemail]=useState('')
     const [password,setpassword]=useState('')
     const [captainData,setcaptainData]=useState({})
     const navigate=useNavigate()
-    const {captain,setcaptain}=useContext(CaptainDataContext)
-
-
+    // const {captain,setcaptain}=useContext(CaptainDataContext)
+    
+const [capdata,setcapdata]=useState(null)
+const dispatch=useDispatch()
+const captain=useSelector(state=>state.captain.captain)
+useEffect(() => {
+    if (captain) {
+        console.log("Captain data updated:", captain);
+        navigate('/captain-home');
+    }
+}, [captain,navigate]);
 
     const submhitHandler=async(e)=>{
         e.preventDefault()
         const captainData={email:email,password:password}
        const response= await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`,captainData)
         if(response.status===200){
-            setcaptain(response.data.captain)
+            console.log(response.data.captain)
+       dispatch(setcaptain(response.data.captain))
+            console.log(captain)
+
             localStorage.setItem('token',response.data.token)
-            navigate('/captain-home')
+            
         }
         console.log(response)
         setemail('')
         setpassword('')
     }
+
     return (
         <div className='p-7 h-screen flex flex-col justify-between'>
             <div>
