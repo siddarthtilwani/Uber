@@ -19,7 +19,7 @@ useEffect(()=>{
         }
     })
     .then(res=>{
-        setUser(res.data.user)
+        setUser(res.data)
         setLoading(false)
 
     })

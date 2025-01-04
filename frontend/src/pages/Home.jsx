@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {useGSAP} from "@gsap/react";
 import  gsap from "gsap";
 import 'remixicon/fonts/remixicon.css'
@@ -8,6 +8,9 @@ import ConfirmedRide from "../components/ConfirmedRide";
 import LookingForDriver from "../components/LooingForDriver";
 import WaitForDrive from "../components/WaitForDrive";
 import axios from 'axios'
+
+import { UserDataContext } from "../context/UserContext";
+import { SocketContext } from "../context/SocketContext";
 const Home = () => {
     const [pickup,setpickup]=useState('')
     const [destination,setdestination]=useState('')
@@ -27,6 +30,14 @@ const Home = () => {
     const [destinationsuggestions,setdestinationsuggestions]=useState([])
     const [activeField,setactiveField]=useState(null)
     const [vehicleType,setvehicleType]=useState(null)
+    const {sendMessage,recieveMessage}=useContext(SocketContext)
+    const {user}=useContext(UserDataContext)
+
+    useEffect(() => {
+        console.log(user)
+        sendMessage('join',{userId:user._id,userType:'user'})
+    }, [])
+
     const submitHandler=(e)=>{
         e.preventDefault();
     }
@@ -165,6 +176,7 @@ else{
                 })
         }
     },[WaitForDrivePannel])
+
    async function findATrip (){    
         
         const response=await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`,{
@@ -206,6 +218,8 @@ else{
         }
         
     }
+
+   
     return (
         <div  className="h-screen  relative overflow-hidden">
             <img className='w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />

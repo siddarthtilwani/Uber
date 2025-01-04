@@ -10,11 +10,11 @@ const CaptainLogin = () => {
     const [password,setpassword]=useState('')
     const [captainData,setcaptainData]=useState({})
     const navigate=useNavigate()
-    // const {captain,setcaptain}=useContext(CaptainDataContext)
+    const {captain,setcaptain}=useContext(CaptainDataContext)
     
 const [capdata,setcapdata]=useState(null)
 const dispatch=useDispatch()
-const captain=useSelector(state=>state.captain.captain)
+// const captain=useSelector(state=>state.captain.captain)
 useEffect(() => {
     if (captain) {
         console.log("Captain data updated:", captain);
@@ -28,7 +28,8 @@ useEffect(() => {
        const response= await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`,captainData)
         if(response.status===200){
             console.log(response.data.captain)
-       dispatch(setcaptain(response.data.captain))
+            await setcaptain(response.data.captain)
+    //    dispatch(setcaptain(response.data.captain))
             console.log(captain)
 
             localStorage.setItem('token',response.data.token)

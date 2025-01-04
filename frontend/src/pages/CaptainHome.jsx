@@ -7,14 +7,22 @@ import { useGSAP } from "@gsap/react";
 import ConfirmRidePopup from "../components/ConfirmRidePopup";
 import { CaptainDataContext } from "../context/CaptainContext";
 import { useSelector } from "react-redux";
+import { SocketContext } from "../context/SocketContext";
 
 const CaptainHome = () => {
     const [RidePopupPannel,setRidePopupPannel]=useState(true)
     const RidePopupPannelRef=useRef(null)
     const [ConfirmRidePopupPannel,setConfirmRidePopupPannel]=useState(false)
     const ConfirmRidePopupPannelRef=useRef(null)
-// const { captain }=useContext(CaptainDataContext)
-const captain=useSelector(state=>state)
+const { captain }=useContext(CaptainDataContext)
+// const captain=useSelector(state=>state)
+
+const {sendMessage,recieveMessage}=useContext(SocketContext)
+useEffect(()=>{
+    console.log(captain)
+    sendMessage('join',{userId:captain._id,userType:'captain'})
+
+},[])
 useEffect(()=>{
     
     console.log(captain)

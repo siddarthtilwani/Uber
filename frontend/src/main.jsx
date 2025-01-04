@@ -7,16 +7,21 @@ import UserContext from './context/UserContext.jsx'
 import CaptainContext from './context/CaptainContext.jsx'
 import {Provider} from 'react-redux'
 import store from './store.js'
+import ScoketProvider from './context/SocketContext.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-     <BrowserRouter>
+    
      <Provider store={store}>
+     <CaptainContext>
       <UserContext>
-        <CaptainContext>
+        <ScoketProvider>
+      <BrowserRouter>
           <App />
-        </CaptainContext>
+          </BrowserRouter>
+          </ScoketProvider>
       </UserContext>
+      </CaptainContext>
       </Provider>
-    </BrowserRouter>
+   
   </StrictMode>
 )

@@ -3,7 +3,8 @@ import { CaptainDataContext } from "../context/CaptainContext";
 import { useSelector } from "react-redux";
 
 const CaptainDetails=()=>{
-    const captain=useSelector(state=>state.captain.captain)
+    // const captain=useSelector(state=>state.captain.captain)
+    const { captain }=useContext(CaptainDataContext)
     useEffect(() => {
         console.log("Captain Details - Current captain data:", captain);
     }, [captain]);
