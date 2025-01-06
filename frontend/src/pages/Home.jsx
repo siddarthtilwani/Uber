@@ -30,7 +30,7 @@ const Home = () => {
     const [destinationsuggestions, setdestinationsuggestions] = useState([])
     const [activeField, setactiveField] = useState(null)
     const [vehicleType, setvehicleType] = useState(null)
-    const [ride,setride]=useState(null)
+    const [ride, setride] = useState(null)
     const { sendMessage, recieveMessage } = useContext(SocketContext)
     const { user } = useContext(UserDataContext)
     recieveMessage('ride-confirmed', (data) => {

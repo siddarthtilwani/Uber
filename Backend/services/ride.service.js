@@ -75,7 +75,7 @@ exports.confirmRideService=async({rideId,captain})=>{
         status:'accepted',
         captain:captain._id
     })
-    const ride=await rideModel.findOne({_id:rideId}).populate('user')
+    const ride=await rideModel.findOne({_id:rideId}).populate('user').populate('captain').select('+OTP')
     if(!ride){
         throw new Error('Ride not found')
         }
