@@ -1,6 +1,6 @@
 import React from "react";
 
-const WaitForDrive=({setWaitForDrivePannel})=>{
+const WaitForDrive=({setWaitForDrivePannel,ride})=>{
     return(
         
         <div>
@@ -9,7 +9,7 @@ const WaitForDrive=({setWaitForDrivePannel})=>{
        <div className="flex justify-between items-center">
        <img className="h-12" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1646663215/assets/6e/e50c1b-2174-4c97-83a1-bfd4544689d0/original/uberX.png" alt="" />
         <div className="text-right">
-            <h2 className="text-lg font-medium">Siddarth</h2>
+            <h2 className="text-lg font-medium">{ride?.user.fullname.firstname+" "+ride?.user.fullname.lastname}</h2>
             <h4 className="text-xl font-semibold -mt-1 -mb-1">KA 03 JF 4691</h4>
             <p className="text-sm text-gray-600">Honda Amaze</p>
         </div>

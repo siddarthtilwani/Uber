@@ -25,16 +25,29 @@ function initializeSocket(server){
         socket.on('disconnect',()=>{
             console.log(`Client disconnected: ${socket.id}`)
         })
+        socket.on('update-location-captain',async(data)=>{
+            console.log('inside backend of captain socket')
+            const {captainId,location}=data
+            if(!location || !location.lat || !location.lng){
+                return socket.emit('error', { message: 'Invalid location data' });
+            }
+
+            await captainModel.findByIdAndUpdate(captainId,{location:{
+                lat:location.lat,
+                lng:location.lng
+            }})
+        })
     })
 }
 
-function sendMessageToSocketId(socketId,message){
+function sendMessageToSocketId(socketId,messageObject){
+    // console.log(`Sending ${messageObject} to socketId:`,socketId)
     if(io){
-        io.to(socketId).emit('message',message)
+        io.to(socketId).emit(messageObject.event,messageObject.data)
 
     }
     else{
-        console.log('Socket not initialized')
+        // console.log('Socket not initialized')
     }
 
 }
