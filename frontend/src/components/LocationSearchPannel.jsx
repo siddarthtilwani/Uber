@@ -24,7 +24,7 @@ const LocationSearchPanel = ({ suggestions,
                 suggestions.map((elem,index)=>{
                     return(
                         <div  key={index} onClick={()=>{
-                            handleSuggestionClick(elem)}}  className='flex gap-4 my-2 border-2 border-gray-50 active:border-black p-3 rounded-xl items-center justify-start'>
+                            handleSuggestionClick(elem)}}  className='flex gap-4 my-2 border-2 border-gray-50 active:border-black p-3 rounded-xl items-center justify-start '>
                         <h2 className='bg-[#eee] h-8 w-12 flex items-center justify-center rounded-full '><i className="ri-map-pin-fill "></i></h2>
                             <h4 className='font-medium'>{elem.display_name}</h4>
                         </div>

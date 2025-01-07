@@ -3,9 +3,9 @@ import React from "react";
 const ConfirmedRide = (props) => {
     return (
         <div>
-            <h5 onClick={() => props.setVehicleFoundPannel(false)} className="absolute text-center w-[93%] p-1 top-0">  <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
+            <h5 onClick={() => props.setConfirmedRidePannel(false)} className="absolute text-center w-[93%] p-1 top-0">  <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
             <h3 className="text-2xl font-semibold mb-5">Confirm your Ride</h3>
-            <div className="flex gap-2 flex-col justify-between items-center">
+            <div className="flex gap-2 flex-col justify-between items-center ">
 
                 <img className="h-20" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1646663215/assets/6e/e50c1b-2174-4c97-83a1-bfd4544689d0/original/uberX.png" alt="" />
 

@@ -124,6 +124,7 @@ const Home = () => {
             gsap.to(
                 vehiclePannelRef.current, {
                 transform: 'translateY(0%)',
+                    opacity: 100
             }
             )
 
@@ -132,6 +133,7 @@ const Home = () => {
             gsap.to(
                 vehiclePannelRef.current, {
                 transform: 'translateY(100%)',
+                opacity: 0
             }
 
             )
@@ -145,6 +147,7 @@ const Home = () => {
             gsap.to(
                 ConfirmedRidePannelRef.current, {
                 transform: 'translateY(0%)',
+                opacity:100
             }
             )
 
@@ -153,6 +156,7 @@ const Home = () => {
             gsap.to(
                 ConfirmedRidePannelRef.current, {
                 transform: 'translateY(100%)',
+                opacity:0
             }
 
             )
@@ -166,6 +170,7 @@ const Home = () => {
             gsap.to(
                 VehicleFoundPannelRef.current, {
                 transform: 'translateY(0%)',
+                opacity:100
             }
             )
 
@@ -174,6 +179,7 @@ const Home = () => {
             gsap.to(
                 VehicleFoundPannelRef.current, {
                 transform: 'translateY(100%)',
+                opacity:0
             }
 
             )
@@ -186,11 +192,13 @@ const Home = () => {
         if (WaitForDrivePannel) {
             gsap.to(WaitForDriveRef.current, {
                 transform: 'translateY(0%)',
+                opacity:100
             })
         }
         else {
             gsap.to(WaitForDriveRef.current, {
                 transform: 'translateY(100%)',
+                opacity:0
             })
         }
     }, [WaitForDrivePannel])
@@ -266,7 +274,7 @@ const Home = () => {
                         </button>
                     </div>
                 </div>
-                <div ref={pannelRef} className="h-[70%] z-20  bg-white mt-5">
+                <div ref={pannelRef} className="h-[70%] z-20 overflow-scroll  bg-white mt-5">
                     <LocationSearchPanel
                         suggestions={activeField === 'pickup' ? pickupsuggestions : destinationsuggestions}
                         setpickup={setpickup}
@@ -275,16 +283,16 @@ const Home = () => {
                         setpannelOpen={setpannelOpen} setvehiclePannelOpen={setvehiclePannelOpen} />
                 </div>
             </div>
-            <div ref={vehiclePannelRef} className="fixed z-10 w-full translate-y-full bottom-0 px-3 py-10 bg-white pt-12">
+            <div ref={vehiclePannelRef} className="fixed z-100 w-full translate-y-full bottom-0 px-3 py-10 bg-white pt-12 opacity-0">
                 <VehiclePannel selectVehicle={setvehicleType} setConfirmedRidePannel={setConfirmedRidePannel} setvehiclePannelOpen={setvehiclePannelOpen} fare={fare} />
             </div>
-            <div ref={ConfirmedRidePannelRef} className="fixed z-10 w-full translate-y-full bottom-0 px-3 py-2 bg-white pt-12">
+            <div ref={ConfirmedRidePannelRef} className="fixed z-20 w-full translate-y-full bottom-0 px-3 py-2 bg-white pt-12 opacity-0">
                 <ConfirmedRide createRide={createRide} pickup={pickup} destination={destination} fare={fare} vehicleType={vehicleType} setVehicleFoundPannel={setVehicleFoundPannel} setConfirmedRidePannel={setConfirmedRidePannel} />
             </div>
-            <div ref={VehicleFoundPannelRef} className="fixed z-10 w-full translate-y-full bottom-0 px-3 py-6 bg-white pt-12">
+            <div ref={VehicleFoundPannelRef} className="fixed z-10 w-full translate-y-full bottom-0 px-3 py-6 bg-white pt-12 opacity-0">
                 <LookingForDriver createRide={createRide} pickup={pickup} destination={destination} fare={fare} vehicleType={vehicleType} setVehicleFoundPannel={setVehicleFoundPannel} />
             </div>
-            <div ref={WaitForDriveRef} className="fixed z-10 w-full bottom-0 px-3 py-6 bg-white pt-12">
+            <div ref={WaitForDriveRef} className="fixed z-10 w-full bottom-0 px-3 py-6 bg-white pt-12 opacity-0">
                 <WaitForDrive ride={ride} setWaitForDrivePannel={setWaitForDrivePannel} />
             </div>
         </div>
