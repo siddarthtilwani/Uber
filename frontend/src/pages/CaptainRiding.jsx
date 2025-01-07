@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import FinishRide from "../components/FinishRide";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import LiveTracking from "../components/LiveTracking";
 
 const CaptainRiding=()=>{
     const [FinsihRidePopupPannel,setFinsihRidePopupPannel]=useState(false)
@@ -22,16 +23,17 @@ const CaptainRiding=()=>{
         }
     },[FinsihRidePopupPannel])
 return(
-    <div className="h-screen">
+    <div className="h-screen w-screen">
           
-    <div className="fixed p-6  top-0 flex items-center justify-between w-screen">
-        <img className="w-16" src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
+    <div className="fixed p-4 left-5  top-0 flex items-center justify-between w-screen">
+        <img className="w-16 " src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
         <Link   to={'/captain-login'} className=" h-10 w-10 bg-white flex items-center justify-center rounded-full">
         <i className="text-lg font-medium ri-logout-box-r-line"></i>
     </Link>
     </div>
-    <div className="h-4/5">
-    <img src="https://user-images.githubusercontent.com/6416095/52931260-c6bb5e80-3371-11e9-9d46-83f7d1389d18.gif" alt="" className="h-full w-full object-cover" />
+        <div className="h-4/5 pointer-events-none">
+    {/* <img src="https://user-images.githubusercontent.com/6416095/52931260-c6bb5e80-3371-11e9-9d46-83f7d1389d18.gif" alt="" className="h-full w-full object-cover" /> */}
+  <LiveTracking/>
     </div>
     
     <div className="h-1/5 p-6 flex relative items-center justify-between bg-yellow-400" onClick={()=>{

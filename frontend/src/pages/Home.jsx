@@ -12,6 +12,7 @@ import axios from 'axios'
 import { UserDataContext } from "../context/UserContext";
 import { SocketContext } from "../context/SocketContext";
 import { useNavigate } from "react-router-dom";
+import LiveTracking from "../components/LiveTracking";
 const Home = () => {
     const [pickup, setpickup] = useState('')
     const [destination, setdestination] = useState('')
@@ -238,36 +239,34 @@ const Home = () => {
 
 
     return (
-        <div className="h-screen  relative overflow-hidden">
-            <img className='w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
-            <div className="h-screen w-screen">
-                <img src="https://user-images.githubusercontent.com/6416095/52931260-c6bb5e80-3371-11e9-9d46-83f7d1389d18.gif" alt="" className="h-full w-full object-cover" />
+        <div className="h-screen relative overflow-hidden">
+            <img className='w-16 absolute left-11 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
+            <div className="h-screen  w-screen z-0 pointer-events-none">
+                {!pannelOpen && <LiveTracking />} 
             </div>
-            <div className="flex flex-col justify-end h-screen top-0 absolute w-full ">
+            <div className="flex flex-col justify-end h-screen top-0 absolute w-full">
                 <div className="h-[32%] p-6 bg-white relative">
                     <h5 ref={pannelcloseref} onClick={() => {
                         setpannelOpen(false)
-
-                    }
-                    } className="absolute  opacity-0 right-6 top-6 text-2xl">
+                    }} className="absolute opacity-0 right-6 top-6 text-2xl">
                         <i className="ri-arrow-down-wide-line"></i>
                     </h5>
                     <h4 className="font-semibold text-2xl">Find a trip</h4>
 
                     <form onSubmit={(e) => submitHandler(e)}>
-                        <div className="line absolute  h-16 left-10  w-1 top-[45%] bg-gray-700 rounded-full"></div>
+                        <div className="line absolute h-16 left-10 w-1 top-[45%] bg-gray-700 rounded-full"></div>
                         <input onClick={() => { setpannelOpen(true); setactiveField('pickup') }} className="bg-[#eee] border px-12 py-2 text-base rounded-lg w-full mt-5" type="text" name="" id="" value={pickup} onChange={handlePickupChange} placeholder="Add a pickup location" />
                         <input onClick={() => { setpannelOpen(true); setactiveField('destination') }} className="bg-[#eee] border px-12 py-2 text-base rounded-lg w-full mt-5" type="text" name="" id="" value={destination} onChange={handleDestinationChange} placeholder="Enter your Destination" />
                     </form>
                     <div className="bg-white">
                         <button
                             onClick={findATrip}
-                            className="bg-black text-white w-full px-4 py-2 rounded-lg mt-3  ">
+                            className="bg-black text-white w-full px-4 py-2 rounded-lg mt-3">
                             Find Trip
                         </button>
                     </div>
                 </div>
-                <div ref={pannelRef} className="h-[70%] bg-white mt-5">
+                <div ref={pannelRef} className="h-[70%] z-20  bg-white mt-5">
                     <LocationSearchPanel
                         suggestions={activeField === 'pickup' ? pickupsuggestions : destinationsuggestions}
                         setpickup={setpickup}
@@ -276,16 +275,16 @@ const Home = () => {
                         setpannelOpen={setpannelOpen} setvehiclePannelOpen={setvehiclePannelOpen} />
                 </div>
             </div>
-            <div ref={vehiclePannelRef} className="fixed z-10 w-full translate-y-full  bottom-0 px-3 py-10 bg-white pt-12">
+            <div ref={vehiclePannelRef} className="fixed z-10 w-full translate-y-full bottom-0 px-3 py-10 bg-white pt-12">
                 <VehiclePannel selectVehicle={setvehicleType} setConfirmedRidePannel={setConfirmedRidePannel} setvehiclePannelOpen={setvehiclePannelOpen} fare={fare} />
             </div>
-            <div ref={ConfirmedRidePannelRef} className="fixed z-10 w-full translate-y-full  bottom-0 px-3 py-2 bg-white pt-12">
+            <div ref={ConfirmedRidePannelRef} className="fixed z-10 w-full translate-y-full bottom-0 px-3 py-2 bg-white pt-12">
                 <ConfirmedRide createRide={createRide} pickup={pickup} destination={destination} fare={fare} vehicleType={vehicleType} setVehicleFoundPannel={setVehicleFoundPannel} setConfirmedRidePannel={setConfirmedRidePannel} />
             </div>
-            <div ref={VehicleFoundPannelRef} className="fixed z-10 w-full translate-y-full  bottom-0 px-3 py-6 bg-white pt-12">
+            <div ref={VehicleFoundPannelRef} className="fixed z-10 w-full translate-y-full bottom-0 px-3 py-6 bg-white pt-12">
                 <LookingForDriver createRide={createRide} pickup={pickup} destination={destination} fare={fare} vehicleType={vehicleType} setVehicleFoundPannel={setVehicleFoundPannel} />
             </div>
-            <div ref={WaitForDriveRef} className="fixed z-10 w-full  bottom-0 px-3 py-6 bg-white pt-12">
+            <div ref={WaitForDriveRef} className="fixed z-10 w-full bottom-0 px-3 py-6 bg-white pt-12">
                 <WaitForDrive ride={ride} setWaitForDrivePannel={setWaitForDrivePannel} />
             </div>
         </div>
