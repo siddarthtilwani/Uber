@@ -44,7 +44,7 @@ const Home = () => {
     recieveMessage('ride-started', (ridedata) => {
         console.log('ride started')
         setWaitForDrivePannel(false);
-        navigate('/riding')
+        navigate('/riding',{state:{ridedata}})
     })
     useEffect(() => {
         console.log(user)

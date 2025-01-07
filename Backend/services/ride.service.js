@@ -92,7 +92,7 @@ exports.startRideService=async({rideId,OTP,captain})=>{
         }
         
 
-        const ride=await rideModel.findOne({_id:rideId}).populate('captain').populate('user').select('OTP').select('status')
+        const ride=await rideModel.findOne({_id:rideId}).populate('captain').populate('user').select('OTP').select('status').select('fare')
         console.log(ride)
         if(ride.status!=='accepted'){
             throw new Error('Ride not accepted')
@@ -105,4 +105,27 @@ exports.startRideService=async({rideId,OTP,captain})=>{
             status:'ongoing'
         })
         return ride;
+}
+
+exports.endRideService=async({rideId,captain})=>{
+    try{
+        if (!rideId) {
+            throw new Error('Ride Id is required')
+        }
+        const ride = await rideModel.findOne({ _id: rideId, captain: captain._id }).populate('captain').populate('user')
+        if (!ride) {
+            throw new Error('Ride not found')
+        }
+        if (ride.status !== 'ongoing') {
+            throw new Error('Ride not ongoing')
+        }
+
+        await rideModel.findOneAndUpdate({ _id: rideId }, {
+            status: 'completed',
+        })
+        return ride;
+    }
+    catch(err){
+        console.log(err)
+    }
 }
