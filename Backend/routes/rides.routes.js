@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router()
 
 const {body, query}=require('express-validator')
-const { createRideController, getFare, confirmRide } = require('../controllers/ride.controller')
+const { createRideController, getFare, confirmRide, startRide } = require('../controllers/ride.controller')
 const {auth, authCaptain}=require('../middlewares/auth')
 
 router.post('/create',auth,
@@ -20,6 +20,12 @@ router.post('/confirm/ride',
     authCaptain,
     body('rideId').isMongoId().withMessage('Invalid ride id'),
     confirmRide
+)
+
+router.get('/start-ride',authCaptain,
+    query('rideId').isMongoId().withMessage('ride id is required'),
+    query('OTP').isNumeric().isLength({ min: 6, max: 6 }).withMessage('otp is required'),
+    startRide
 )
 
 module.exports = router

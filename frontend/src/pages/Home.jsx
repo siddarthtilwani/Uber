@@ -11,6 +11,7 @@ import axios from 'axios'
 
 import { UserDataContext } from "../context/UserContext";
 import { SocketContext } from "../context/SocketContext";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
     const [pickup, setpickup] = useState('')
     const [destination, setdestination] = useState('')
@@ -33,11 +34,17 @@ const Home = () => {
     const [ride, setride] = useState(null)
     const { sendMessage, recieveMessage } = useContext(SocketContext)
     const { user } = useContext(UserDataContext)
+    const navigate = useNavigate()
     recieveMessage('ride-confirmed', (data) => {
         setWaitForDrivePannel(true)
         setVehicleFoundPannel(false)
         setride(data)
         console.log(data)
+    })
+    recieveMessage('ride-started', (ridedata) => {
+        console.log('ride started')
+        setWaitForDrivePannel(false);
+        navigate('/riding')
     })
     useEffect(() => {
         console.log(user)

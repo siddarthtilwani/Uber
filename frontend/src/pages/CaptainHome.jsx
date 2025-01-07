@@ -126,7 +126,7 @@ useEffect(()=>{
                 <RidePopup confirmRide={confirmRide} ride={ride} setConfirmRidePopupPannel={setConfirmRidePopupPannel} setRidePopupPannel={setRidePopupPannel}/>
             </div>
             <div ref={ConfirmRidePopupPannelRef} className="fixed h-screen z-10 w-full translate-y-full  bottom-0 px-3 py-10 bg-white pt-12">
-                <ConfirmRidePopup setConfirmRidePopupPannel={setConfirmRidePopupPannel} setRidePopupPannel={setRidePopupPannel}/>
+                <ConfirmRidePopup ride={ride} setConfirmRidePopupPannel={setConfirmRidePopupPannel} setRidePopupPannel={setRidePopupPannel}/>
             </div>
 
         </div>

@@ -1,5 +1,5 @@
 const { getCaptainsInTheRadius, getAddressCoordinates } = require('../services/maps.service');
-const {createRide, getFare, confirmRideService}=require('../services/ride.service')
+const {createRide, getFare, confirmRideService, startRideService}=require('../services/ride.service')
 const {validationResult}=require('express-validator');
 const { sendMessageToSocketId } = require('../socket');
 const userModel = require('../models/user.model');
@@ -73,4 +73,24 @@ exports.confirmRide=async(req,res,next)=>{
             return res.status(500).json({message:err.message})
         }
 
+}
+
+exports.startRide=async(req,res,next)=>{
+    const errors=validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(400).json({message:errors.array()})
+        }
+        const {OTP,rideId}=req.query
+        try{
+            const ride=await startRideService({rideId,OTP,captain:req.captain})
+            sendMessageToSocketId(ride.user.socketId,{
+                event:'ride-started',
+                data:ride
+            })
+            return res.status(200).json(ride)
+        }
+        catch(err){
+            console.log(err);
+            return res.status(500).json({message:err.message})
+        }
 }
